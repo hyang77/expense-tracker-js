@@ -1,0 +1,22 @@
+{
+  "name": "expense-tracker",
+  "version": "1.0.0",
+  "description": "The expense tracker is an app that helps keep track of personal life expenses such as daily goods, food, and utilities.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyang77/expense-tracker-js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hyang77/expense-tracker-js/issues"
+  },
+  "homepage": "https://github.com/hyang77/expense-tracker-js#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
