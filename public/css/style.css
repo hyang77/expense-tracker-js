@@ -1,0 +1,30 @@
+/* setup custom properties */
+:root {
+  --primary-color: #faeee7;
+  --secondary-color: #fffffe;
+  --text-color: #33272a;
+  --button-color: #ffc6c7;
+}
+
+body {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  background-color: var(--secondary-color);
+  border-radius: 10px;
+}
+
+.monthly-expense,
+.payment-type {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+}
+
+.list-container,
+.chart-container {
+  border-radius: 10px;
+}
