@@ -19,6 +19,7 @@
   "homepage": "https://github.com/hyang77/expense-tracker-js#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mongoose": "^5.10.16",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
