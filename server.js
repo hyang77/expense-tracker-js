@@ -4,6 +4,9 @@ const app = express()
 const port = 3000
 // include routes
 const expenseRoutes = require('./routes/expense')
+// Parse url-encoded and json bodies
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // expense routes
 app.use('/expense', expenseRoutes)
