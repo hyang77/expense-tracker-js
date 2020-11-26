@@ -1,3 +1,4 @@
+const { request } = require('express');
 const express = require('express')
 const router = express.Router();
 
@@ -12,7 +13,14 @@ router.get('/:expenseId', function (req, res, next) {
 })
 // create an expense
 router.post('/add', function (req, res, next) {
-    res.send('Got a post request for an expense!')
+    const expense = {
+        type: req.body.type,
+        amount: req.body.amount
+    }
+    res.status(201).json({
+        message: 'Handling POST request to /expense/add',
+        createExpense: expense
+    })
 })
 // edit an expense
 router.patch('/edit/:expenseId', function (req, res, next) {
