@@ -2,8 +2,20 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 const port = 3000
+const mongoose = require('mongoose');
+require('dotenv').config()
+
 // include routes
 const expenseRoutes = require('./routes/expense')
+
+// Connect to mongoDB
+mongoose.connect('mongodb+srv://holly:' + process.env.DB_PASSWORD + '@cluster0.qx2hs.mongodb.net/test?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+});
+
+
 // Parse url-encoded and json bodies
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
