@@ -1,6 +1,9 @@
 const { request } = require('express');
-const express = require('express')
+const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
+// Include models
+const Expense = require('../models/expense');
 
 // get all expenses
 router.get('/', function (req, res, next) {
@@ -13,10 +16,22 @@ router.get('/:expenseId', function (req, res, next) {
 })
 // create an expense
 router.post('/add', function (req, res, next) {
-    const expense = {
+    const expense = new Expense({
+        _id: new mongoose.Types.ObjectId(),
         type: req.body.type,
-        amount: req.body.amount
-    }
+        date: req.body.date,
+        amount: req.body.amount,
+        category: req.body.category,
+        memo: req.body.memo
+    });
+    expense
+        .save()
+        .then(result => {
+            console.log(result);
+        })
+        .catch(err => {
+            console.log(err)
+        })
     res.status(201).json({
         message: 'Handling POST request to /expense/add',
         createExpense: expense
