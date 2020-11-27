@@ -7,7 +7,16 @@ const Expense = require('../models/expense');
 
 // get all expenses
 router.get('/', function (req, res, next) {
-    res.send('Got a get request for all expenses!')
+    Expense.find()
+        .exec()
+        .then(docs => {
+            console.log(docs);
+            res.status(200).json(docs);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err});
+        })
 })
 
 // get an expense
