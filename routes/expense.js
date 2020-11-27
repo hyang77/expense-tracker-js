@@ -35,10 +35,17 @@ router.get('/', function (req, res, next) {
 router.get('/:expenseId', function (req, res, next) {
     const id = req.params.expenseId;
     Expense.findById(id)
+        .select('-__v')
         .exec()
         .then(doc => {
-            console.log(doc);
-            res.status(200).json(doc);
+            res.status(200).json({
+                expense: doc,
+                request: {
+                    type: "GET",
+                    decription: "Get all products",
+                    url: "http://lcocalhost:3000/expense"
+                }
+            });
         })
         .catch(err => {
             console.log(err);
@@ -59,10 +66,20 @@ router.post('/add', function (req, res, next) {
     expense
         .save()
         .then(result => {
-            console.log(result);
             res.status(201).json({
-                message: 'Handling POST request to /expense/add',
-                createExpense: expense
+                message: 'Created an expense successfully',
+                createExpense: {
+                    type: result.type,
+                    date: result.date,
+                    amount: result.amount,
+                    category: result.category,
+                    memo: result.memo,
+                    _id: result._id
+                },
+                request: {
+                    type: "GET",
+                    url: "http://localhost:3000/expense/" + result._id
+                }
             })
         })
         .catch(err => {
@@ -83,8 +100,13 @@ router.patch('/edit/:expenseId', function (req, res, next) {
     Expense.updateMany({_id: id}, {$set: updateOps })
         .exec()
         .then(result => {
-            console.log(result);
-            res.status(200).json(result);
+            res.status(200).json({
+                messgae: 'Expense updated successfully',
+                request: {
+                    type: 'GET',
+                    url: "http://localhost:3000/expense/" + id
+                }
+            });
         })
         .catch(err => {
             console.log(err);
@@ -98,7 +120,14 @@ router.delete('/delete/:expenseId', function (req, res, next) {
     Expense.deleteOne({ _id: id })
         .exec()
         .then(result => {
-            res.status(200).json(result);
+            res.status(200).json({
+                messgae: 'Expense deleted successfully',
+                request: {
+                    type: 'POST',
+                    url: "http://localhost:3000/expense/add/",
+                    body: { type: 'String', date: 'Date', amount: 'Number', category: 'String', memo: 'String'}
+                }
+            });
         })
         .catch(err => {
             console.log(err);
