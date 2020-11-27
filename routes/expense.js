@@ -65,8 +65,25 @@ router.post('/add', function (req, res, next) {
 
 // edit an expense
 router.patch('/edit/:expenseId', function (req, res, next) {
-    res.send('Got a patch request for an expense!')
+    const id = req.params.expenseId;
+    const updateOps = {};
+    for (const ops of req.body) {
+        updateOps[ops.propName] = ops.value;
+        console.log(updateOps);
+    };
+    
+    Expense.updateMany({_id: id}, {$set: updateOps })
+        .exec()
+        .then(result => {
+            console.log(result);
+            res.status(200).json(result);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({error: err});
+        });
 })
+
 // delete an expense
 router.delete('/delete/:expenseId', function (req, res, next) {
     const id = req.params.expenseId;
