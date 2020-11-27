@@ -24,6 +24,7 @@ router.get('/:expenseId', function (req, res, next) {
             res.status(500).json({ error: err});
         })
 })
+
 // create an expense
 router.post('/add', function (req, res, next) {
     const expense = new Expense({
@@ -38,15 +39,17 @@ router.post('/add', function (req, res, next) {
         .save()
         .then(result => {
             console.log(result);
+            res.status(201).json({
+                message: 'Handling POST request to /expense/add',
+                createExpense: expense
+            })
         })
         .catch(err => {
-            console.log(err)
+            console.log(err);
+            res.status(500).json({ error: err});
         })
-    res.status(201).json({
-        message: 'Handling POST request to /expense/add',
-        createExpense: expense
-    })
 })
+
 // edit an expense
 router.patch('/edit/:expenseId', function (req, res, next) {
     res.send('Got a patch request for an expense!')
