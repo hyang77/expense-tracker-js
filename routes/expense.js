@@ -8,14 +8,22 @@ const Expense = require('../models/expense');
 // get all expenses
 router.get('/', function (req, res, next) {
     Expense.find()
+        .select('-__v')
         .exec()
         .then(docs => {
-            console.log(docs);
-            // if (docs.length > 0) {
-               res.status(200).json(docs); 
-            // } else {
-            //     res.status(404).json({ message: 'No Entries Found'});
-            // }
+            const response = {
+                count: docs.length,
+                expenses: docs.map(doc => {
+                    return {
+                        expense: doc,
+                        request: {
+                            type: "GET",
+                            url: "http://localhost:3000/expense/" + doc._id
+                        }
+                    }
+                })
+            }
+            res.status(200).json(response); 
         })
         .catch(err => {
             console.log(err);
