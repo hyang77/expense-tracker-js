@@ -12,7 +12,17 @@ router.get('/', function (req, res, next) {
 
 // get an expense
 router.get('/:expenseId', function (req, res, next) {
-    res.send('Got a get request for an expense!')
+    const id = req.params.expenseId;
+    Expense.findById(id)
+        .exec()
+        .then(doc => {
+            console.log(doc);
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ error: err});
+        })
 })
 // create an expense
 router.post('/add', function (req, res, next) {
