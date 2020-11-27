@@ -5,10 +5,10 @@ const objectId = Schema.Types.ObjectId;
 
 const expense = Schema({
     _id: objectId,
-    type: String,
-    date: Date,
-    amount: Number,
-    category: String,
+    type: { type:String, required: true },
+    date: { type:Date, required: true },
+    amount: { type: Number, required: true },
+    category: { type: String, required: true },
     memo: String
 });
 
