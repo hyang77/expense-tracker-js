@@ -5,9 +5,6 @@ const port = 3000
 const mongoose = require('mongoose');
 require('dotenv').config()
 
-// include routes
-const expenseRoutes = require('./routes/expense')
-
 // Connect to mongoDB
 mongoose.connect('mongodb+srv://holly:' + process.env.DB_PASSWORD + '@cluster0.qx2hs.mongodb.net/test?retryWrites=true&w=majority', {
   useNewUrlParser: true,
@@ -15,6 +12,19 @@ mongoose.connect('mongodb+srv://holly:' + process.env.DB_PASSWORD + '@cluster0.q
   useCreateIndex: true
 });
 
+//static files
+app.use(express.static('public'))
+app.use('/css', express.static(__dirname + 'public/css'))
+app.use('/js', express.static(__dirname + 'public/js'))
+
+// Setup template engine
+app.set('view engine', 'ejs')
+
+// use res.render to load up an ejs view file
+// index page
+app.get('/', function(req, res) {
+  res.render('index');
+});
 
 // Parse url-encoded and json bodies
 app.use(express.urlencoded({ extended: true }));
@@ -33,6 +43,8 @@ app.use((req, res, next) => {
   next(); 
 })
 
+// include routes
+const expenseRoutes = require('./routes/expense')
 // expense routes
 app.use('/expense', expenseRoutes)
 app.use(morgan('dev'));
