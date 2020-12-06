@@ -17,9 +17,6 @@ app.use(express.static('public'))
 app.use('/css', express.static(__dirname + 'public/css'))
 app.use('/js', express.static(__dirname + 'public/js'))
 
-// Setup template engine
-app.set('view engine', 'ejs')
-
 // use res.render to load up an ejs view file
 // index page
 app.get('/', function(req, res) {
@@ -44,7 +41,7 @@ app.use((req, res, next) => {
 })
 
 // include routes
-const expenseRoutes = require('./routes/expense')
+const expenseRoutes = require('./api/routes/expense')
 // expense routes
 app.use('/expense', expenseRoutes)
 app.use(morgan('dev'));
