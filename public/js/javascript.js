@@ -102,20 +102,26 @@ function updateExpense(event) {
 }
 
 function deleteExpense(event) {
-    const id = event.target.getAttribute('data-id');
-    axios.delete(`http://localhost:3000/expense/delete/${id}`)
-        .then(res=> {
-            console.log(res);
-        })
-        .catch(error => {
-            console.log(error);
-        })
-    // Delete DOM elements
-    const parent = event.target.parentElement.parentElement;
-    parent.innerHTML = '';
-    // Update expesne info
-    calcExpense();
-    displayChart();
+    let answer = confirm("Are you sure to delete this expense?");
+    if ( answer == true) {
+        const id = event.target.getAttribute('data-id');
+        axios.delete(`http://localhost:3000/expense/delete/${id}`)
+            .then(res=> {
+                console.log(res);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        // Delete DOM elements
+        const parent = event.target.parentElement.parentElement;
+        parent.innerHTML = '';
+        // Update expesne info
+        calcExpense();
+        displayChart();
+    } else {
+        return;
+    }
+    
 
 }
 
