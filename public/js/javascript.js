@@ -1,6 +1,7 @@
 function init() {
     displayAllExpenses();
     calcExpense();
+    displayChart();
     document.querySelector(".btn-add").addEventListener("click", addExpense)
     document.querySelector(".btn-update").addEventListener("click", updateExpense)
     document.addEventListener('click', event => {
@@ -114,6 +115,7 @@ function deleteExpense(event) {
     parent.innerHTML = '';
     // Update expesne info
     calcExpense();
+    displayChart();
 
 }
 
@@ -157,4 +159,73 @@ function calcExpense() {
         .catch(error => {
             console.log(error);
         })
+}
+
+function displayChart() {
+    let labels = ['Utility','Transport','Food', 'Daily goods','Rent','Travel','Social','Others'];
+    let allData = [];
+    let utilityData = 0;
+    let transData = 0;
+    let foodData = 0;
+    let dailyData = 0;
+    let rentData = 0;
+    let travelData = 0;
+    let socialData = 0;
+    let otherData = 0;
+    axios.get('http://localhost:3000/expense/')
+        .then(res => {
+            res = res.data.expenses;
+            res.forEach( item => {
+                switch (item.expense.category) {
+                    case 'Utility':
+                        utilityData += item.expense.amount;
+                        break;
+                    case 'Transport':
+                        transData += item.expense.amount;
+                        break;
+                    case 'Food':
+                        foodData += item.expense.amount;
+                        break;
+                    case 'Daily goods':
+                        dailyData += item.expense.amount;
+                        break;
+                    case 'Rent':
+                        rentData += item.expense.amount;
+                        break;
+                    case 'Travel':
+                        travelData += item.expense.amount;
+                        break;
+                    case 'Social':
+                        socialData += item.expense.amount;
+                        break;
+                    case 'Others':
+                        otherData += item.expense.amount;
+                        break;
+                }
+            });
+            allData.push(utilityData, transData, foodData, dailyData, rentData, travelData, socialData, otherData);
+            // Display chart
+            var chart = new Chart(document.getElementById('chart'), {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            backgroundColor: ['#B10DC9','#FF4136','#0074D9','#FF851B','#3D9970','#85144b','#FFDC00','#7FDBFF'],
+                            data: allData
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Your monthly expense by category'
+                    }
+                }
+            });
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    
 }
