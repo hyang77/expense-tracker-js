@@ -5,6 +5,7 @@
   --text-color: #33272a;
   --button-color: #ffc6c7;
   --link-color: #c3f0ca;
+  --highlight-color: #ff8ba7;
 }
 
 body {
@@ -42,4 +43,10 @@ button {
 
 .hide {
   display: none;
+}
+
+.error {
+  font-size: 10em;
+  text-shadow: 7px 7px var(--link-color);
+  color: var(--highlight-color);
 }
