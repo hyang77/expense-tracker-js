@@ -20,8 +20,7 @@ body {
   border-radius: 10px;
 }
 
-.monthly-expense,
-.payment-type {
+.box {
   background-color: var(--primary-color);
   border-radius: 10px;
 }

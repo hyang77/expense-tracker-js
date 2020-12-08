@@ -1,5 +1,6 @@
 function init() {
     displayAllExpenses();
+    calcExpense();
     document.querySelector(".btn-add").addEventListener("click", addExpense)
     document.querySelector(".btn-update").addEventListener("click", updateExpense)
     document.addEventListener('click', event => {
@@ -111,6 +112,8 @@ function deleteExpense(event) {
     // Delete DOM elements
     const parent = event.target.parentElement.parentElement;
     parent.innerHTML = '';
+    // Update expesne info
+    calcExpense();
 
 }
 
@@ -129,4 +132,29 @@ function showForm(title) {
         document.querySelector(".btn-update").classList.remove('hide');
         document.querySelector(".btn-update").classList.add('show');
     }
+}
+
+function calcExpense() {
+    let monthlyExpense = 0;
+    let income = 0;
+    let paid = 0;
+    axios.get('http://localhost:3000/expense/')
+        .then(res => {
+            res = res.data.expenses;
+            res.forEach( item => {
+                if (item.expense.type == "income") {
+                    income += item.expense.amount;
+                } else if (item.expense.type == "paid") {
+                    paid += item.expense.amount;
+                }
+            });
+            monthlyExpense = income - paid;
+            // Display expense information on the page
+            document.querySelector("#monthly-expense").innerText = monthlyExpense;
+            document.querySelector("#income-type").innerText = `+$${income}`;
+            document.querySelector("#paid-type").innerText = `-$${paid}`;
+        })
+        .catch(error => {
+            console.log(error);
+        })
 }
