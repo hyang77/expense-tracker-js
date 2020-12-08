@@ -43,7 +43,7 @@ router.get('/:expenseId', function (req, res, next) {
                 request: {
                     type: "GET",
                     decription: "Get all products",
-                    url: "http://lcocalhost:3000/expense"
+                    url: "http://localhost:3000/expense"
                 }
             });
         })
