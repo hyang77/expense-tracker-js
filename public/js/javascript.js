@@ -22,7 +22,7 @@ function displayAllExpenses() {
                 const eachrow = "<div class='row text-center'>" +
                                 "<div class='col-md-1'>" + item.expense.type + "</div>" +
                                 "<div class='col-md-2'>" + item.expense.amount + "</div>" + 
-                                "<div class='col-md-2'>" + item.expense.date + "</div>" + 
+                                "<div class='col-md-2'>" + dateConverter(item.expense.date) + "</div>" + 
                                 "<div class='col-md-2'>" + item.expense.category + "</div>" + 
                                 "<div class='col-md-2'>" + item.expense.memo + "</div>" +
                                 "<div class='col-md-3'>" + "<button  class='m-1 btn-edit' data-id=" + item.expense._id + ">Edit</button>" +
@@ -48,7 +48,7 @@ function showEditForm(event) {
            const expense = res.data.expense;
             document.querySelector("#type").value = expense.type;
             document.querySelector("#amount").value = expense.amount;
-            document.querySelector("#date").value = expense.date;
+            document.querySelector("#date").value = dateConverter(expense.date);
             document.querySelector("#category").value = expense.category;
             document.querySelector("#memo").value = expense.memo;
         })
@@ -227,5 +227,12 @@ function displayChart() {
         .catch(error => {
             console.log(error);
         })
-    
+}
+
+function dateConverter(expenseDate) {
+    let date = new Date(expenseDate);
+    let d = date.getDate();
+    let m = date.getMonth() + 1;
+    let y = date.getFullYear();
+    return `${m}/${d}/${y}`
 }
