@@ -23,8 +23,8 @@ function displayAllExpenses() {
                                 "<div class='col-md-2'>" + item.expense.date + "</div>" + 
                                 "<div class='col-md-2'>" + item.expense.category + "</div>" + 
                                 "<div class='col-md-2'>" + item.expense.memo + "</div>" +
-                                "<div class='col-md-3'>" + "<a  class='m-1 btn-edit' data-id=" + item.expense._id + ">Edit</a>" +
-                                "<a class='m-1 btn-delete' data-id=" + item.expense._id + ">Delete</a></div>"
+                                "<div class='col-md-3'>" + "<button  class='m-1 btn-edit' data-id=" + item.expense._id + ">Edit</button>" +
+                                "<button class='m-1 btn-delete' data-id=" + item.expense._id + ">Delete</button></div>"
                 container.innerHTML += eachrow;
             });
         })

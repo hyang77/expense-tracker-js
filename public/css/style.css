@@ -32,8 +32,14 @@ body {
 
 button {
   background-color: var(--button-color);
+  font-weight: bold;
+  cursor: pointer;
 }
 
-a {
-  background-color: var(--link-color);
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
 }
